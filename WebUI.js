@@ -1,18 +1,18 @@
 //WebUI.js
     
     
-	if (!Function.prototype.override)
-	{
-		Function.prototype.override = function(func)
-		{
-			var superFunction = this;
-			return function()
-			{
-				this.superFunction = superFunction;
-				return func.apply(this,arguments);
-			};
-		}
-	}
+    if (!Function.prototype.override)
+    {
+        Function.prototype.override = function(func)
+        {
+            var superFunction = this;
+            return function()
+            {
+                this.superFunction = superFunction;
+                return func.apply(this,arguments);
+            };
+        }
+    }
     
     
     WebUI;
