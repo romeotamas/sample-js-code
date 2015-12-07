@@ -27,25 +27,24 @@
         $(document).ready(function(){            
             
             /* Template implementing */
-            function inherit(proto) {
+            function createTemplateApp() {
+                var steps = {
+                    process: function() {
+                        this.header();
+                        this.content();
+                        this.footer();
+                    }
+                };
                 var In = function(){};
-                In.prototype = proto;
+                In.prototype = steps;
                 return new In();
             }
-            
-            var steps = {
-                process: function() {
-                    this.header();
-                    this.content();
-                    this.footer();
-                }
-            };
             
             function runApp() {
                 var container = $("#appWrapper");
                 var params = {container:container};
                 
-                var initApp = inherit(steps);
+                var initApp = createTemplateApp();
                 
                 // implement template steps
                 initApp.header = function() 
