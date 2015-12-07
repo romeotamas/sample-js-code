@@ -138,8 +138,7 @@
         
         this.create             = function()
         {
-            //console.log("WebUI create ...", self.getDOMElements());
-            //....
+            //.... overided .....
         }
         
         init();
