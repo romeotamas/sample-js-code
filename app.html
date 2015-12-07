@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>App page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="WebUI.js"></script>
+    <script type="text/javascript" src="WebUIStyle.js"></script>
+    <script type="text/javascript" src="WebUIClock.js"></script>
+    <style type="text/css">
+        #appWrapper {
+            margin: 0 auto;
+            width: 500px;
+            height: 100%;
+            transition: all .3s;
+            position: relative;
+        }
+        #clock {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            color: #333;
+            font-size: 3rem;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function(){            
+            
+            /* Template implementing */
+            function inherit(proto) {
+                var In = function(){};
+                In.prototype = proto;
+                return new In();
+            }
+            
+            var steps = {
+                process: function() {
+                    this.header();
+                    this.content();
+                    this.footer();
+                }
+            };
+            
+            function runApp() {
+                var container = $("#appWrapper");
+                var params = {container:container};
+                
+                var initApp = inherit(steps);
+                
+                // implement template steps
+                initApp.header = function() 
+                {
+                    console.log("initApp: header step");
+                };
+                initApp.footer = function() 
+                {
+                    console.log("initApp: footer step");
+                };
+                initApp.content = function() 
+                {
+                    
+                    var _app = new App(params);
+                    container.append(_app.renderApp());
+                    
+                    /* Create and implement style changer visitor */
+                    var _setStyle = new WebUIStyle({init:false});
+                    _app.setVisitor(_setStyle, "style");
+                    
+                    /* Create and implent timer visitor */
+                    var _clockStyle = new WebUIClock();
+                    _app.setVisitor(_clockStyle, "clock");
+                    
+                    _clockStyle.startstoptimer();
+                    
+                    _app.addListener("onRemove", function(obj){
+                        console.log("Do something now ... when onRemove", obj);
+                        container.append(_app.renderApp());
+                        _setStyle.changeStyle("#CC0000");
+                    });
+                    
+                }
+                
+                initApp.process();
+            }
+            
+            runApp();
+        });
+    </script>
+</head>
+<body>
+    <div id="appWrapper"></div>
+</body>
+</html>
