@@ -1,5 +1,5 @@
 //WebUI.js
-    
+//Sample code
     
     if (!Function.prototype.override)
     {
